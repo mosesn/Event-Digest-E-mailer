@@ -1,8 +1,9 @@
 <?php
 ///////////////////////////////////////////////////////////////////////////////
-// Automated Event Digest e-mail Generator
+// Project: Event Digest E-mailer
 // Author: Ryan Bubinski, ryanbubinski@gmail.com, 2010.
-// Purpose: Automatically generate event digest from Google Calendar XML
+// Purpose: Uses a Google Calendar and e-mail listserv to automagically generate 
+//          an periodic events digest e-mail
 ///////////////////////////////////////////////////////////////////////////////
 
 /*
