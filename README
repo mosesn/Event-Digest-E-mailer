@@ -1,7 +1,7 @@
 Project: Event Digest E-mailer
 Author: Ryan Bubinski, ryanbubinski@gmail.com, 2010.
 Purpose: Uses a Google Calendar and e-mail listserv to automagically generate 
-         an periodic events digest e-mail
+         a periodic events digest e-mail
 
 I. USE
 1) Enter the proper configuration details in config.ini.php.
