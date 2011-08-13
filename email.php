@@ -7,42 +7,47 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 /* Load dependencies */
-require_once( "config.ini.php" );
-require_once( "library.php" );
-require_once( "classes/class.phpmailer.php" );
+require_once( "./config.ini.php" );
+require_once( "./library.php" );
+require_once( "./classes/class.phpmailer.php" );
 
 /* Get upcoming events from Google Calendar XML feed */
 $start = mktime( 0, 0, 0 );
 $end = $start + ( DAYS_FROM_NOW*24*60*60 );
 $events = getEvents( CALENDAR_FEED_URL, $start, $end );
 
-if ( empty( $events ) ) die( "There are no upcoming events" );
+if ( empty( $events ) ) {
+  die( "There are no upcoming events\n" );
+  exit();
+}
 
 /* Generate e-mail body */
 $email_body = EMAIL_FIRST_LINE;
 $email_body .= "\n\n";
 
 foreach( $events as $time => $event )
-  {
+{
   $email_body .= ( date( "g", $time ) < 10 ) ? date( "D,  g:ia: ", $time ) : date( "D, g:ia: ", $time );
   $email_body .= html_entity_decode( $event->title ). "\n";
-  }
+}
 
 $email_body .= "\n";
 
 foreach( $events as $time => $event )
-  {
+{
   $email_body .=  "**********************************************************************";
   $email_body .=  "\n" . clean( $event->title ) . "\n";
   $email_body .=  "**********************************************************************";
   $email_body .= "\n\n";
   $email_body .=  clean( $event->content ) . "\n\n\n";
-  }
+}
 
-$email_body .=  "\n\n" . EMAIL_FOOTER;
+$email_body .=   EMAIL_FOOTER . "\n";
+
+echo $email_body;
 
 /* send e-mail */
-$email_subject = EMAIL_SUBJECT . " ( Week of " . date( "n/j", $start ) .  " - " . date( "n/j", $end ) . " )";
+/*$email_subject = EMAIL_SUBJECT . " ( Week of " . date( "n/j", $start ) .  " - " . date( "n/j", $end ) . " )";
 
 $mail = new PHPMailer();
 $mail->IsSMTP();                           // telling the class to use SMTP
@@ -62,4 +67,4 @@ $mail->Body = $email_body;
 $mail->AddAddress( EMAIL_RECIPIENT );
 
 if( !$mail->Send() ) echo "Mailer Error: " . $mail->ErrorInfo . "\n";
-else echo "Message sent!\n";
+else echo "Message sent!\n";*/

@@ -9,7 +9,7 @@
 date_default_timezone_set( 'America/New_York' );
 
 /* Public XML feed of Google calendar describing events */ 
-define( 'CALENDAR_FEED_URL', "" );
+define( 'CALENDAR_FEED_URL', "https://www.google.com/calendar/feeds/adicu.com_tud5etmmo5mfmuvdfb54u733i4%40group.calendar.google.com/public/basic" );
 
 /* Number of days to include from time script runs */
 define( 'DAYS_FROM_NOW', 7 ); 
@@ -25,4 +25,4 @@ define( 'EMAIL_RECIPIENT', "listserv@email.com" );
 /* E-mail contents */
 define( 'EMAIL_SUBJECT', "Events Digest" );
 define( 'EMAIL_FIRST_LINE',  "Events this week: " );
-define( 'EMAIL_FOOTER', "This e-mail was automagically generated just for you on " . date( "l, F j, Y" ) . " at " . date( "g:ia T" ) . "." );
+define( 'EMAIL_FOOTER', "This email brought to you by the Application Develpment Initiative" );
