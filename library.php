@@ -24,6 +24,24 @@ function clean( $string )
   return $string;
 }
 
+function clean_body( $string, $start, $end)
+{
+  $string = html_entity_decode( $string );
+  $string = strip_tags( $string );
+
+  $string = preg_replace( "/Event Description: /", "", $string );
+  $string = preg_replace( "/Event Status:[^\n]+/", "", $string );
+  $string = preg_replace( "/Who:[^\n]+\n/", "", $string );
+  $string = preg_replace( "/When:[^\n]+\n/", "", $string );
+  $string = preg_replace( "/Where: /", "", $string );    
+  $string = preg_replace( "/&#39;/", "'", $string );
+  $string = preg_replace( "/\n([A-Z]+)(\n)+/", "$\n1", $string );
+  $string = preg_replace( "/EST\n/", "", $string );
+  $string = preg_replace( "/EDT /", "", $string );
+  $string = preg_replace( "/\n\n/","\n", $string );
+  $ttime = date( "l m/d,  g:i-", $start) . date( "g:i a", $end);
+  return $ttime ." in " . $string;
+}
 
 /*
  * Retrieves events from Google Calendar feed that fall within the specified interval
@@ -53,7 +71,6 @@ function getEvents( $calendar_url, $start, $end )
 
       $start_pos = strpos( $event->summary, "When: " );
       $start_time = strtotime( substr( $event->summary, $start_pos+6, $end_pos-$start_pos-6 ) );
-      
       if( $start_time >= $start && $start_time <= $end )
       {
         $event->start_time = $start_time;

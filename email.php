@@ -22,28 +22,34 @@ if ( empty( $events ) ) {
 }
 
 /* Generate e-mail body */
-$email_body = EMAIL_FIRST_LINE;
+$email_body .= "\nXXX UPDATE HEADER XXX\n\n\n";
+$count = 1;
+
+$email_body .= "ADI Events\n";
+foreach( $events as $time => $event )
+{
+  $email_body .= strval($count++) . ". ";
+  $email_body .= html_entity_decode( $event->title ). ", ";
+  $email_body .= date( "l m/d", $time );
+}
+
 $email_body .= "\n\n";
+$email_body .= "ADI EVENTS\n";
 
+$count = 1;
 foreach( $events as $time => $event )
-{
-  $email_body .= ( date( "g", $time ) < 10 ) ? date( "D,  g:ia: ", $time ) : date( "D, g:ia: ", $time );
-  $email_body .= html_entity_decode( $event->title ). "\n";
-}
-
-$email_body .= "\n";
-
-foreach( $events as $time => $event )
-{
-  $email_body .=  "**********************************************************************";
-  $email_body .=  "\n" . clean( $event->title ) . "\n";
-  $email_body .=  "**********************************************************************";
+{ 
+  $email_body .= strval($count++);
+  $email_body .=  ". " . clean( $event->title ) . "\n";
+  //$email_body .= $event->content;
+  $email_body .= clean_body( $event->content, $time, $end);
   $email_body .= "\n\n";
-  $email_body .=  clean( $event->content ) . "\n\n\n";
+  //$email_body .= clean( $event->content ) . "\n\n\n";
+  //$email_body .= strval(strpos($event->content, "\n\n"));
+  
 }
 
-$email_body .=   EMAIL_FOOTER . "\n";
-
+$email_body .= "XXX UPDATE OTHER EVENTS XXX\n";
 echo $email_body;
 
 /* send e-mail */
